@@ -26,31 +26,31 @@ export function getDetailsContentLayout(ymaps) {
             </div>
         {% endif %}
     `,
-    // {
-    //   build: () => {
-    //     BalloonContentLayout.superclass.build.call(this);
+    {
+      build: function () {
+        BalloonContentLayout.superclass.build.call(this);
 
-    //     const { details } = this.getData().object.properties;
+        const { details } = this.getData().object.properties;
 
-    //     if (details) {
-    //       const container = this.querySelector('.details-chart');
+        if (details) {
+          const container = this.getParentElement().querySelector('.details-chart');
 
-    //       this.connectionChart = createChart(
-    //         container,
-    //         details.chart,
-    //         details.isActive
-    //       );
-    //     }
-    //   },
+          this.connectionChart = createChart(
+            container,
+            details.chart,
+            details.isActive
+          );
+        }
+      },
 
-    //   clear: () => {
-    //     BalloonContentLayout.superclass.clear.call(this);
+      clear: function () {
+        if (this.connectionChart) {
+          this.connectionChart.destroy();
+        }
 
-    //     if (this.connectionChart) {
-    //       this.connectionChart.destroy();
-    //     }
-    //   }
-    // }
+        BalloonContentLayout.superclass.clear.call(this);
+      }
+    }
   );
 
   return BalloonContentLayout;
