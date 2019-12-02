@@ -27,13 +27,13 @@ export function getDetailsContentLayout(ymaps) {
         {% endif %}
     `,
     {
-      build: () => {
+      build: function () {
         BalloonContentLayout.superclass.build.call(this);
 
         const { details } = this.getData().object.properties;
 
         if (details) {
-          const container = this.getElement().querySelector('.details-chart');
+          const container = this.getParentElement().querySelector('.details-chart');
 
           this.connectionChart = createChart(
             container,
@@ -43,7 +43,7 @@ export function getDetailsContentLayout(ymaps) {
         }
       },
 
-      clear: () => {
+      clear: function () {
         if (this.connectionChart) {
           this.connectionChart.destroy();
         }

@@ -19,10 +19,11 @@ export function initMap(ymaps, containerId) {
     geoObjectBalloonContentLayout: getDetailsContentLayout(ymaps)
   });
 
-  objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
+  // objectManager.clusters.options.set('preset', 'islands#greenClusterIcons'); тут нужно понять как сделать так, чтобы кружки были красными при наличии defective
 
   loadList().then(data => {
     objectManager.add(data);
+    myMap.geoObjects.add(objectManager)
   });
 
   // details
@@ -30,12 +31,10 @@ export function initMap(ymaps, containerId) {
     const objectId = event.get('objectId');
     const obj = objectManager.objects.getById(objectId);
 
-    objectManager.objects.balloon.open(objectId);
-
     if (!obj.properties.details) {
       loadDetails(objectId).then(data => {
         obj.properties.details = data;
-        objectManager.objects.balloon.setData(obj);
+        objectManager.objects.balloon.open(objectId);
       });
     }
   });
